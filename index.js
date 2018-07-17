@@ -37,7 +37,6 @@ fi = (function() {
          return newCollection
       }
     },
-
     reduce: function(collection, iteratee, acc) {
       let current = acc;
       for(let el of collection) {
@@ -103,24 +102,42 @@ fi = (function() {
       }
       return newCollection
     },
-    sortBy: function(array, iteratee) {
-      let newCollection = []
-      for (let el of array) {
-        if (!!el){
-          newCollection.push(el)
-        }
-      }
-      return newCollection
-    }
-    // uniq: function(array, [isSorted], [iteratee]) {
+    // sortBy: function(array, iteratee) {
     //   let newCollection = []
     //   for (let el of array) {
-    //     if (el.){
+    //     if (!!el){
     //       newCollection.push(el)
     //     }
     //   }
     //   return newCollection
     // },
+    uniq: function(array, [isSorted], [iteratee]) {
+      let newCollection = []
+      for (let el of array) {
+        if (el){
+          newCollection.push(el)
+        }
+      }
+      return newCollection
+    },
+
+    keys: function(object) {
+      return Object.keys(object)
+    },
+
+    values: function(object) {
+      return Object.values(object)
+    },
+    functions: function(object) {
+      var newCollection = [];
+        for(let item in object) {
+          if(typeof object[item] === "function") {
+            newCollection.push(item)
+          }
+        }
+    return newCollection.sort();
+    }
+
 
   }
 })()
