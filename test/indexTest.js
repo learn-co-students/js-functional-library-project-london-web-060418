@@ -89,6 +89,10 @@ describe('index.js', function () {
 
     it('does not traverse the whole array if the value is found early', function () {
       const spy = chai.spy(findCBGenerator(0))
+      console.log("collection",intArr);
+      console.log("spy",spy);
+
+
       fi.find(intArr, spy)
       expect(spy).to.have.been.called.exactly(3)
     })
