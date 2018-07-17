@@ -84,13 +84,10 @@ fi = (function() {
          return array[0]
       }
     },
-    last: function(array, [n]) {
+    last: function(array, n) {
       if (n){
-        let newCollection = []
-        for (var i = n; i < (array.length - 1) - n ; i++) {
-          console.log(array[i]);
-          newCollection.push(array[i])
-        }
+        let newCollection = array.slice(array.length-n)
+        console.log(newCollection);
         return newCollection
       }
       else{
@@ -114,16 +111,16 @@ fi = (function() {
         }
       }
       return newCollection
-    },
-    uniq: function(array, [isSorted], [iteratee]) {
-      let newCollection = []
-      for (let el of array) {
-        if (el.){
-          newCollection.push(el)
-        }
-      }
-      return newCollection
-    },
+    }
+    // uniq: function(array, [isSorted], [iteratee]) {
+    //   let newCollection = []
+    //   for (let el of array) {
+    //     if (el.){
+    //       newCollection.push(el)
+    //     }
+    //   }
+    //   return newCollection
+    // },
 
   }
 })()
