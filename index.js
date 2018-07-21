@@ -177,16 +177,34 @@ fi = (function() {
            return newArr
          },
 
-         // sortBy: function(array, callback) {
-         //   let newArr=[]
-         //   if (callback !== undefined){
-         //      newArr = array.sort(callback)
-         //    }else{
-         //      newArr = array.sort()
-         //    }
-         //    console.log(newArr)
-         //    return newArr.reverse()
-         // }
+         sortBy: function (data, callback) {
+           if (typeof(callback) === "function") {
+
+             let newArray = [];
+
+             fi.each(data, function(element) {
+               newArray.push([element, callback(element)]);
+             });
+
+             newArray.sort(function (a, b) {return a[1] - b[1]});
+
+            let result = fi.map(newArray, function(element) {
+              return element[0]
+            })
+            return result;
+
+        } else if (typeof(callback) === "string") {
+            let newArray = data.slice(0);
+
+            let result = newArray.sort(function(a, b) {
+              let x = a[callback].toLowerCase()
+              let y = b[callback].toLowerCase()
+              return x < y ? -1 : x > y ? 1 : 0;
+            })
+            return result;
+        }
+      },
+
   }
 })()
 
