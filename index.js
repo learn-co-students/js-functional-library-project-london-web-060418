@@ -86,7 +86,6 @@ fi = (function() {
     last: function(array, n) {
       if (n){
         let newCollection = array.slice(array.length-n)
-        console.log(newCollection);
         return newCollection
       }
       else{
@@ -102,23 +101,109 @@ fi = (function() {
       }
       return newCollection
     },
-    // sortBy: function(array, iteratee) {
-    //   let newCollection = []
-    //   for (let el of array) {
-    //     if (!!el){
-    //       newCollection.push(el)
-    //     }
-    //   }
-    //   return newCollection
-    // },
-    uniq: function(array, [isSorted], [iteratee]) {
-      let newCollection = []
-      for (let el of array) {
-        if (el){
-          newCollection.push(el)
+    sortBy: function(array, iteratee) {
+      function compare(a, b) {
+        return iteratee(a) - iteratee(b);
+      }
+      newCollection = array.slice()
+      newCollection = newCollection.sort(compare)
+      return newCollection
+    },
+    uniq: function(array, isSorted, iteratee) {
+      let newCollection = [];
+
+      if (isSorted){
+        const fastUniq = (arr) => {
+          for (var i = 0; i < arr.length; i++) {
+            if (arr[i] === arr[i + 1]){
+              arr.slice(array[i + 1],1)
+            }
+          }
+        }
+        const includesUniq = (arr) => {
+
+        }
+        newCollection.length > 0 ? newCollection : newCollection = array.slice()
+        if (iteratee){
+          mapped = []
+          for (let el of array) {
+            if (!mapped.includes(el)){
+                mapped.push(iteratee(el))
+            }
+          }
+          mapped = fastUniq(mapped)
+          return array.slice(mapped.length)
+        }
+
+        else{
+          newCollection = fastUniq(newCollection)
+          return newCollection
         }
       }
-      return newCollection
+      else{
+        if (iteratee){
+          mapped = []
+          for (let el of array) {
+            if (!mapped.includes(el)){
+                mapped.push(el)
+            }
+          }
+          for (let el of array) {
+            newCollection.push(iteratee(el))
+          }
+          let last = [];
+          for (let el of newCollection) {
+            if (!last.includes(el)){
+                last.push(el)
+            }
+          }
+          return mapped.slice(0, last.length)
+        }
+
+        if (newCollection.length === 0){
+          for (let el of array) {
+            if (!newCollection.includes(el)){
+                newCollection.push(el)
+            }
+          }
+          return newCollection
+        }
+      }
+    },
+    flatten: function(array, shallow) {
+      newArr = []
+      nested = true
+      const lookForNest = (arr) => {
+        if (!nested) {
+          return newArr
+        }
+        for (el of arr) {
+          if (Array.isArray(el)){
+            return lookForNest(el)
+          }
+          else{
+            newArr.push(el)
+          }
+        }
+        return newArr
+      }
+
+      if(shallow){
+        for (el of array) {
+          if (Array.isArray(el)){
+            for (x of el) {
+              newArr.push(x)
+            }
+          }
+          else{
+            newArr.push(el)
+          }
+        }
+        return newArr
+      }
+      else {
+        lookForNest(array)
+      }
     },
 
     keys: function(object) {
@@ -136,14 +221,27 @@ fi = (function() {
           }
         }
     return newCollection.sort();
-    }
-
-
+  },
+  jglFlatten: function(array, shallow) {
+    let check = true
+    return function grabNumber(array, newArray = []){
+      for(let el of array) {
+        if(Array.isArray(el)) {
+          if(shallow && check) {
+            check = false;
+            grabNumber(el, newArray);
+            check = true;
+          } else if(shallow && !check) {
+            newArray.push(el);
+          } else {
+            grabNumber(el, newArray);
+          }
+        } else {
+          newArray.push(el);
+        }
+      }
+      return newArray
+    }(array)
+  }
   }
 })()
-// {name: "Allegra", location:"London"}
-// const bla = fi.each({name: "Allegra", location:"London"}, (x) => {
-//    x.toUpperCase()
-//  });
-
-// console.log(bla)
