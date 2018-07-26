@@ -89,6 +89,10 @@ describe('index.js', function () {
 
     it('does not traverse the whole array if the value is found early', function () {
       const spy = chai.spy(findCBGenerator(0))
+      console.log("collection",intArr);
+      console.log("spy",spy);
+
+
       fi.find(intArr, spy)
       expect(spy).to.have.been.called.exactly(3)
     })
@@ -233,7 +237,6 @@ describe('index.js', function () {
 
     it('removes duplicate values from an array when an iteratee is applied', function () {
       const newArr = fi.uniq([1, 2, 2, 3, 4, 6, 9], false, (val => val % 3))
-      console.log(newArr)
       expect(arraysEqual(newArr, [1, 2, 3])).to.equal(true)
     })
 
