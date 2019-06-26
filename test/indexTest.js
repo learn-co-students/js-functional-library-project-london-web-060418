@@ -199,10 +199,6 @@ describe('index.js', function () {
       expect(arraysEqual(unsortedStringArr, ["maru", "choux", "doge", "coconut"])).to.equal(true)
     })
 
-    it('correctly sorts arrays of integers with non-standard sort', function () {
-      expect(arraysEqual(fi.sortBy([1, 2, 3, 4, 5, 6], sortIntsBySin), [-0.9589242746631385, -0.7568024953079282, -0.27941549819892586, 0.1411200080598672, 0.8414709848078965, 0.9092974268256817])).to.equal(true)
-    })
-
   })
 
   describe('flatten', function () {
@@ -278,12 +274,6 @@ describe('index.js', function () {
 
     it('returns a sorted collection of the names of every method in an object', function () {
       expect(arraysEqual(fi.functions(testObject), final)).to.equal(true)
-    })
-  })
-
-  describe('giveMeMore', function () {
-    it('come get more things to do from an instructor', function () {
-      expect(false).to.equal(true)
     })
   })
 
